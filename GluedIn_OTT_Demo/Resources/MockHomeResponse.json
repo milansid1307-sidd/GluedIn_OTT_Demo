@@ -1,0 +1,294 @@
+{
+  "heroBanner": {
+    "id": "hero_001",
+    "title": "Stranger Things",
+    "description": "When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces and one strange little girl.",
+    "thumbnail_url": "https://picsum.photos/seed/strangerthings/400/600",
+    "banner_url": "https://picsum.photos/seed/strangerthings/1200/675",
+    "video_url": "https://cdn.pixabay.com/video/2026/05/04/350522_large.mp4"
+  },
+  "rails": [
+    {
+      "id": "rail_trending",
+      "title": "Trending Now",
+      "items": [
+        {
+          "id": "c_001",
+          "title": "Breaking Bad",
+          "description": "A high school chemistry teacher turned methamphetamine producer partners with a former student.",
+          "thumbnail_url": "https://picsum.photos/seed/breakingbad/400/600",
+          "banner_url": "https://picsum.photos/seed/breakingbad/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2020/04/24/37088-413229662_large.mp4"
+        },
+        {
+          "id": "c_002",
+          "title": "The Crown",
+          "description": "Follows the political rivalries and romance of Queen Elizabeth II's reign.",
+          "thumbnail_url": "https://picsum.photos/seed/thecrown/400/600",
+          "banner_url": "https://picsum.photos/seed/thecrown/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2026/05/04/350522_large.mp4"
+        },
+        {
+          "id": "c_003",
+          "title": "Squid Game",
+          "description": "Hundreds of cash-strapped players accept a strange invitation to compete in children's games.",
+          "thumbnail_url": "https://picsum.photos/seed/squidgame/400/600",
+          "banner_url": "https://picsum.photos/seed/squidgame/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2023/04/28/160767-822213540_large.mp4"
+        },
+        {
+          "id": "c_004",
+          "title": "The Witcher",
+          "description": "Geralt of Rivia, a solitary monster hunter, struggles to find his place in a world where people often prove more wicked than beasts.",
+          "thumbnail_url": "https://picsum.photos/seed/witcher/400/600",
+          "banner_url": "https://picsum.photos/seed/witcher/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2022/03/18/111101-689925384_large.mp4"
+        },
+        {
+          "id": "c_005",
+          "title": "Dark",
+          "description": "A family saga with a supernatural twist, set in a German town where children disappear.",
+          "thumbnail_url": "https://picsum.photos/seed/darkseries/400/600",
+          "banner_url": "https://picsum.photos/seed/darkseries/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2023/01/15/146606-789534239_large.mp4"
+        },
+        {
+          "id": "c_t006",
+          "title": "Narcos",
+          "description": "A chronicled look at the criminal exploits of Colombian drug lord Pablo Escobar.",
+          "thumbnail_url": "https://picsum.photos/seed/narcos/400/600",
+          "banner_url": "https://picsum.photos/seed/narcos/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2021/08/04/83880-585600454_large.mp4"
+        },
+        {
+          "id": "c_t007",
+          "title": "Altered Carbon",
+          "description": "In a future where consciousness can be digitized and downloaded, a soldier is brought back to life to solve a murder mystery.",
+          "thumbnail_url": "https://picsum.photos/seed/alteredcarbon/400/600",
+          "banner_url": "https://picsum.photos/seed/alteredcarbon/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2021/01/18/62249-503297067_large.mp4"
+        },
+        {
+          "id": "c_t008",
+          "title": "Daredevil",
+          "description": "Blinded as a young boy, Matt Murdock fights injustice by day as a lawyer and by night as the superhero Daredevil.",
+          "thumbnail_url": "https://picsum.photos/seed/daredevil/400/600",
+          "banner_url": "https://picsum.photos/seed/daredevil/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2020/04/24/37088-413229662_large.mp4"
+        },
+        {
+          "id": "c_t009",
+          "title": "Ozark",
+          "description": "A financial advisor drags his family from Chicago to the Ozarks, where he must launder money to appease a drug boss.",
+          "thumbnail_url": "https://picsum.photos/seed/ozarktrend/400/600",
+          "banner_url": "https://picsum.photos/seed/ozarktrend/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2026/05/04/350522_large.mp4"
+        },
+        {
+          "id": "c_t010",
+          "title": "Peaky Blinders",
+          "description": "A gangster family epic set in 1900s England, centering on the Shelby crime family.",
+          "thumbnail_url": "https://picsum.photos/seed/peakytrend/400/600",
+          "banner_url": "https://picsum.photos/seed/peakytrend/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2023/04/28/160767-822213540_large.mp4"
+        },
+        {
+          "id": "c_t011",
+          "title": "Taboo",
+          "description": "In 1814, James Delaney returns to London from Africa after his father's death to rebuild a shipping empire.",
+          "thumbnail_url": "https://picsum.photos/seed/taboo/400/600",
+          "banner_url": "https://picsum.photos/seed/taboo/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2022/03/18/111101-689925384_large.mp4"
+        },
+        {
+          "id": "c_t012",
+          "title": "The Boys",
+          "description": "A group of vigilantes set out to take down corrupt superheroes who abuse their superpowers.",
+          "thumbnail_url": "https://picsum.photos/seed/theboys/400/600",
+          "banner_url": "https://picsum.photos/seed/theboys/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2023/01/15/146606-789534239_large.mp4"
+        }
+      ]
+    },
+    {
+      "id": "rail_recommended",
+      "title": "Recommended for You",
+      "items": [
+        {
+          "id": "c_006",
+          "title": "Ozark",
+          "description": "A financial advisor drags his family from Chicago to the Ozarks, where he must launder money.",
+          "thumbnail_url": "https://picsum.photos/seed/ozark/400/600",
+          "banner_url": "https://picsum.photos/seed/ozark/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2020/04/24/37088-413229662_large.mp4"
+        },
+        {
+          "id": "c_007",
+          "title": "Mindhunter",
+          "description": "In the late 1970s two FBI agents expand criminal science by delving into the psychology of murder.",
+          "thumbnail_url": "https://picsum.photos/seed/mindhunter/400/600",
+          "banner_url": "https://picsum.photos/seed/mindhunter/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2026/05/04/350522_large.mp4"
+        },
+        {
+          "id": "c_008",
+          "title": "Wednesday",
+          "description": "Wednesday Addams investigates a murder spree while making new friends at Nevermore Academy.",
+          "thumbnail_url": "https://picsum.photos/seed/wednesday/400/600",
+          "banner_url": "https://picsum.photos/seed/wednesday/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2023/04/28/160767-822213540_large.mp4"
+        },
+        {
+          "id": "c_009",
+          "title": "The Last of Us",
+          "description": "Joel and Ellie must survive in a post-apocalyptic world overrun by infected humans.",
+          "thumbnail_url": "https://picsum.photos/seed/lastofus/400/600",
+          "banner_url": "https://picsum.photos/seed/lastofus/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2022/03/18/111101-689925384_large.mp4"
+        },
+        {
+          "id": "c_010",
+          "title": "House of the Dragon",
+          "description": "The story of House Targaryen set 200 years before the events of Game of Thrones.",
+          "thumbnail_url": "https://picsum.photos/seed/housedragon/400/600",
+          "banner_url": "https://picsum.photos/seed/housedragon/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2023/01/15/146606-789534239_large.mp4"
+        },
+        {
+          "id": "c_r006",
+          "title": "Severance",
+          "description": "Mark leads a team of office workers whose memories have been surgically divided between their work and personal lives.",
+          "thumbnail_url": "https://picsum.photos/seed/severancerec/400/600",
+          "banner_url": "https://picsum.photos/seed/severancerec/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2021/08/04/83880-585600454_large.mp4"
+        },
+        {
+          "id": "c_r007",
+          "title": "Black Mirror",
+          "description": "An anthology series that taps into our collective unease with the modern world.",
+          "thumbnail_url": "https://picsum.photos/seed/blackmirror/400/600",
+          "banner_url": "https://picsum.photos/seed/blackmirror/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2021/01/18/62249-503297067_large.mp4"
+        },
+        {
+          "id": "c_r008",
+          "title": "Westworld",
+          "description": "Set in a futuristic Wild West theme park, hosts begin to question the nature of their reality.",
+          "thumbnail_url": "https://picsum.photos/seed/westworld/400/600",
+          "banner_url": "https://picsum.photos/seed/westworld/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2020/04/24/37088-413229662_large.mp4"
+        },
+        {
+          "id": "c_r009",
+          "title": "Euphoria",
+          "description": "A group of high school students navigate love and friendships in a world of drugs, sex, and violence.",
+          "thumbnail_url": "https://picsum.photos/seed/euphoria/400/600",
+          "banner_url": "https://picsum.photos/seed/euphoria/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2026/05/04/350522_large.mp4"
+        },
+        {
+          "id": "c_r010",
+          "title": "True Detective",
+          "description": "Seasonal anthology series in which police investigations unearth the personal and professional secrets of those involved.",
+          "thumbnail_url": "https://picsum.photos/seed/truedetective/400/600",
+          "banner_url": "https://picsum.photos/seed/truedetective/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2023/04/28/160767-822213540_large.mp4"
+        },
+        {
+          "id": "c_r011",
+          "title": "The Mandalorian",
+          "description": "The travels of a lone bounty hunter in the outer reaches of the galaxy, far from the authority of the New Republic.",
+          "thumbnail_url": "https://picsum.photos/seed/mandalorian/400/600",
+          "banner_url": "https://picsum.photos/seed/mandalorian/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2022/03/18/111101-689925384_large.mp4"
+        }
+      ]
+    },
+    {
+      "id": "rail_new",
+      "title": "New Releases",
+      "items": [
+        {
+          "id": "c_011",
+          "title": "Beef",
+          "description": "Two strangers spiral out of control after they let a road rage incident consume them.",
+          "thumbnail_url": "https://picsum.photos/seed/beeftv/400/600",
+          "banner_url": "https://picsum.photos/seed/beeftv/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2023/01/15/146606-789534239_large.mp4"
+        },
+        {
+          "id": "c_012",
+          "title": "The Bear",
+          "description": "A young chef from the fine dining world comes to run his family's sandwich shop.",
+          "thumbnail_url": "https://picsum.photos/seed/thebeartv/400/600",
+          "banner_url": "https://picsum.photos/seed/thebeartv/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2021/08/04/83880-585600454_large.mp4"
+        },
+        {
+          "id": "c_013",
+          "title": "Succession",
+          "description": "The Roy family, owners of a media and entertainment conglomerate, struggle for power.",
+          "thumbnail_url": "https://picsum.photos/seed/succession/400/600",
+          "banner_url": "https://picsum.photos/seed/succession/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2021/01/18/62249-503297067_large.mp4"
+        },
+        {
+          "id": "c_n004",
+          "title": "The White Lotus",
+          "description": "Follows various guests and employees of the White Lotus chain of hotels in different locations.",
+          "thumbnail_url": "https://picsum.photos/seed/whitelotus/400/600",
+          "banner_url": "https://picsum.photos/seed/whitelotus/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2020/04/24/37088-413229662_large.mp4"
+        },
+        {
+          "id": "c_n005",
+          "title": "Andor",
+          "description": "The tale of the burgeoning rebellion against the Empire and how people and planets became involved.",
+          "thumbnail_url": "https://picsum.photos/seed/andortv/400/600",
+          "banner_url": "https://picsum.photos/seed/andortv/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2026/05/04/350522_large.mp4"
+        },
+        {
+          "id": "c_n006",
+          "title": "Shogun",
+          "description": "In feudal Japan, an English navigator becomes a key player in a dangerous political power struggle.",
+          "thumbnail_url": "https://picsum.photos/seed/shogun/400/600",
+          "banner_url": "https://picsum.photos/seed/shogun/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2023/04/28/160767-822213540_large.mp4"
+        },
+        {
+          "id": "c_n007",
+          "title": "The Penguin",
+          "description": "Oz Cobb rises to power in the Gotham City underworld after the events of The Batman.",
+          "thumbnail_url": "https://picsum.photos/seed/penguin/400/600",
+          "banner_url": "https://picsum.photos/seed/penguin/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2022/03/18/111101-689925384_large.mp4"
+        },
+        {
+          "id": "c_n008",
+          "title": "House of Cards",
+          "description": "A Congressman works with his equally ambitious wife to exact revenge on the people who betrayed him.",
+          "thumbnail_url": "https://picsum.photos/seed/houseofcards/400/600",
+          "banner_url": "https://picsum.photos/seed/houseofcards/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2023/01/15/146606-789534239_large.mp4"
+        },
+        {
+          "id": "c_n009",
+          "title": "The Diplomat",
+          "description": "A career diplomat lands in a high-profile post abroad, juggling an international crisis while navigating a marriage.",
+          "thumbnail_url": "https://picsum.photos/seed/diplomat/400/600",
+          "banner_url": "https://picsum.photos/seed/diplomat/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2021/08/04/83880-585600454_large.mp4"
+        },
+        {
+          "id": "c_n010",
+          "title": "Bodies",
+          "description": "Four detectives in four different time periods each discover a body in the same London location.",
+          "thumbnail_url": "https://picsum.photos/seed/bodies/400/600",
+          "banner_url": "https://picsum.photos/seed/bodies/1200/675",
+          "video_url": "https://cdn.pixabay.com/video/2021/01/18/62249-503297067_large.mp4"
+        }
+      ]
+    }
+  ]
+}
