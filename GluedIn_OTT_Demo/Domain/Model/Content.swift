@@ -8,7 +8,7 @@
 import Foundation
 
 /// Core domain model for a watchable content item.
-struct Content {
+struct Content: Codable {
     let id: String
     let title: String
     let description: String

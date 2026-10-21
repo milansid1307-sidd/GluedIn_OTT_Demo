@@ -47,6 +47,7 @@ final class HomeViewModel {
     // Separate from state so pagination appends don't re-trigger onStateChange.
 
     private var homeContent: HomeContent?
+    private var overriddenHero: Content?
 
     // MARK: - Pagination State
 
@@ -56,7 +57,7 @@ final class HomeViewModel {
 
     // MARK: - Derived Data
 
-    var heroBanner: Content? { homeContent?.heroBanner }
+    var heroBanner: Content? { overriddenHero ?? homeContent?.heroBanner }
 
     var rails: [ContentRail] { homeContent?.rails ?? [] }
 
@@ -80,6 +81,8 @@ final class HomeViewModel {
                     self.state = .empty
                 } else {
                     self.homeContent = content
+                    // Restore last-played hero across app launches
+                    self.overriddenHero = LastPlayedContentStore.load()
                     self.state = .success(content)
                 }
             } catch {
@@ -110,6 +113,11 @@ final class HomeViewModel {
             }
             self.isLoadingNextPage = false
         }
+    }
+
+    /// Replaces the hero banner with the content the user just started playing.
+    func updateHeroBanner(with content: Content) {
+        overriddenHero = content
     }
 
     /// Allows manual retry after an error.

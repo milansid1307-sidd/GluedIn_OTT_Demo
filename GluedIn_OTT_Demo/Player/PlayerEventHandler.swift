@@ -26,9 +26,6 @@ final class PlayerEventHandler {
     /// KVO observations — held so they auto-cancel on dealloc.
     private var observations: [NSKeyValueObservation] = []
 
-    /// Periodic time observer token — must be removed explicitly.
-    private var timeObserver: Any?
-
     // MARK: - Attach / Detach
 
     /// Call this after setting up AVPlayer. Starts all observations.
@@ -36,7 +33,6 @@ final class PlayerEventHandler {
         self.player = player
         observePlayerStatus(player)
         observeTimeControlStatus(player)
-        observeCurrentItem(player)
         registerNotifications()
     }
 
@@ -44,12 +40,6 @@ final class PlayerEventHandler {
     func detach() {
         observations.forEach { $0.invalidate() }
         observations.removeAll()
-
-        if let token = timeObserver, let player = player {
-            player.removeTimeObserver(token)
-            timeObserver = nil
-        }
-
         NotificationCenter.default.removeObserver(self)
     }
 
@@ -101,17 +91,6 @@ final class PlayerEventHandler {
             }
         }
         observations.append(tcObs)
-    }
-
-    // MARK: - KVO: Current Item (seek events via currentTime changes)
-
-    private func observeCurrentItem(_ player: AVPlayer) {
-        // Periodic observer fires every 0.5s — used for progress tracking in VM
-        let interval = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-        timeObserver = player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] _ in
-            // Progress updates are sent to the ViewModel by PlayerViewController directly.
-            // PlayerEventHandler only forwards discrete events, not continuous state.
-        }
     }
 
     // MARK: - Notifications

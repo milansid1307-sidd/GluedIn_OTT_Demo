@@ -64,12 +64,12 @@ GluedIn_OTT_Demo/
 ├── Domain/
 │   ├── Model/           (Content, ContentRail, HeroBanner)
 │   ├── Repository/      (ContentRepositoryProtocol)
-│   └── UseCase/         (GetHomeContentUseCase, GetMoreRailsUseCase)
+│   └── UseCase/         (GetHomeContentUseCase, GetMoreRailsUseCase, GetContentDetailUseCase)
 ├── Data/
-│   ├── DTO/             (HomeResponseDTO, RailDTO, ContentDTO)
+│   ├── DTO/             (HomeResponseDTO, ContentRailDTO, ContentDTO)
 │   ├── Mapper/          (ContentMapper — DTO → Domain)
 │   ├── Repository/      (ContentRepositoryImpl)
-│   └── Remote/          (ContentRemoteDataSourceProtocol, MockContentDataSource)
+│   └── Remote/          (ContentDataSourceProtocol, MockContentDataSource)
 ├── Player/
 │   ├── PlayerEvent.swift
 │   ├── PlayerEventHandler.swift
@@ -170,11 +170,11 @@ Only `MockContentDataSource` needs replacing — nothing else changes.
 **Current:**
 ```swift
 // Data/Remote/MockContentDataSource.swift
-class MockContentDataSource: ContentRemoteDataSourceProtocol {
+class MockContentDataSource: ContentDataSourceProtocol {
     func fetchHome() async throws -> HomeResponseDTO {
         // Decodes MockHomeResponse.json from Bundle
     }
-    func fetchMoreRails(page: Int) async throws -> [RailDTO] {
+    func fetchMoreRails(page: Int) async throws -> [ContentRailDTO] {
         // Returns static paginated data
     }
 }
@@ -182,7 +182,7 @@ class MockContentDataSource: ContentRemoteDataSourceProtocol {
 
 **Future (real API):**
 ```swift
-class LiveContentDataSource: ContentRemoteDataSourceProtocol {
+class LiveContentDataSource: ContentDataSourceProtocol {
     private let baseURL = URL(string: "https://api.example.com")!
 
     func fetchHome() async throws -> HomeResponseDTO {
@@ -190,11 +190,11 @@ class LiveContentDataSource: ContentRemoteDataSourceProtocol {
         return try JSONDecoder().decode(HomeResponseDTO.self, from: data)
     }
 
-    func fetchMoreRails(page: Int) async throws -> [RailDTO] {
+    func fetchMoreRails(page: Int) async throws -> [ContentRailDTO] {
         var url = baseURL.appendingPathComponent("/rails")
         url.append(queryItems: [URLQueryItem(name: "page", value: "\(page)")])
         let (data, _) = try await URLSession.shared.data(from: url)
-        return try JSONDecoder().decode([RailDTO].self, from: data)
+        return try JSONDecoder().decode([ContentRailDTO].self, from: data)
     }
 }
 ```

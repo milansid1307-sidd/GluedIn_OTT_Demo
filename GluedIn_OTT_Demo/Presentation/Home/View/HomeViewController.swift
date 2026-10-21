@@ -25,6 +25,7 @@ final class HomeViewController: UIViewController {
     // Loading / error overlay views
     private let loadingIndicator = UIActivityIndicatorView(style: .large)
     private let errorView = UILabel()
+    private let retryButton = UIButton(type: .system)
 
     // MARK: - Lifecycle
 
@@ -34,7 +35,13 @@ final class HomeViewController: UIViewController {
         setupTableView()
         setupOverlays()
         bindViewModel()
+        subscribeToPlaybackNotification()
         viewModel.loadContent()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        reloadHeroBannerIfNeeded()
     }
 
     // MARK: - Setup
@@ -89,6 +96,48 @@ final class HomeViewController: UIViewController {
             errorView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
             errorView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32)
         ])
+
+        retryButton.setTitle("Retry", for: .normal)
+        retryButton.setTitleColor(.white, for: .normal)
+        retryButton.backgroundColor = UIColor(red: 229/255, green: 9/255, blue: 20/255, alpha: 1)
+        retryButton.layer.cornerRadius = 6
+        retryButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        retryButton.isHidden = true
+        retryButton.translatesAutoresizingMaskIntoConstraints = false
+        retryButton.addTarget(self, action: #selector(retryTapped), for: .touchUpInside)
+        view.addSubview(retryButton)
+        NSLayoutConstraint.activate([
+            retryButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            retryButton.topAnchor.constraint(equalTo: errorView.bottomAnchor, constant: 20),
+            retryButton.widthAnchor.constraint(equalToConstant: 120),
+            retryButton.heightAnchor.constraint(equalToConstant: 40)
+        ])
+    }
+
+    // MARK: - Notification
+
+    private func subscribeToPlaybackNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleContentPlaybackStarted(_:)),
+            name: .contentPlaybackStarted,
+            object: nil
+        )
+    }
+
+    @objc private func handleContentPlaybackStarted(_ notification: Notification) {
+        guard let content = notification.userInfo?["content"] as? Content else { return }
+        viewModel.updateHeroBanner(with: content)
+        // Mark dirty — actual reload happens in viewWillAppear when VC is back on screen
+        heroBannerNeedsReload = true
+    }
+
+    private var heroBannerNeedsReload = false
+
+    private func reloadHeroBannerIfNeeded() {
+        guard heroBannerNeedsReload, !viewModel.rails.isEmpty else { return }
+        heroBannerNeedsReload = false
+        tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
     }
 
     // MARK: - ViewModel Binding
@@ -117,11 +166,13 @@ final class HomeViewController: UIViewController {
         case .loading:
             tableView.isHidden = true
             errorView.isHidden = true
+            retryButton.isHidden = true
             loadingIndicator.startAnimating()
 
         case .success:
             loadingIndicator.stopAnimating()
             errorView.isHidden = true
+            retryButton.isHidden = true
             tableView.isHidden = false
             tableView.reloadData()
 
@@ -130,13 +181,21 @@ final class HomeViewController: UIViewController {
             tableView.isHidden = true
             errorView.isHidden = false
             errorView.text = "No content available."
+            retryButton.isHidden = true
 
         case .error(let message):
             loadingIndicator.stopAnimating()
             tableView.isHidden = true
             errorView.isHidden = false
             errorView.text = "Something went wrong.\n\(message)"
+            retryButton.isHidden = false
         }
+    }
+
+    // MARK: - Actions
+
+    @objc private func retryTapped() {
+        viewModel.retry()
     }
 
     // MARK: - Navigation

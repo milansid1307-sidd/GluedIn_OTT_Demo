@@ -30,11 +30,11 @@ final class MockContentDataSource: ContentDataSourceProtocol {
     // Sintel and Big Buck Bunny are Blender Foundation open movies with rich nature scenes.
 
     private static let natureVideos: [String] = [
-        "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8",
-        "https://cdn.theoplayer.com/video/big_buck_bunny/big_buck_bunny_metadata.m3u8",
+        "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8",
         "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8",
-        "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8",
-        "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8"
+        "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_4x3/bipbop_4x3_variant.m3u8",
+        "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
+        "https://bitmovin-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
     ]
 
     static func videoURL(for id: String) -> String {

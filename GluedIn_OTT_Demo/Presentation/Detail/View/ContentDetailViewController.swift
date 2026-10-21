@@ -54,7 +54,6 @@ final class ContentDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         // Restart preview each time screen appears (e.g. returning from player)
         if previewPlayer == nil, let url = viewModel.content?.videoURL {
             startPreview(videoURL: url)
@@ -64,7 +63,6 @@ final class ContentDetailViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         stopPreview()
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
 
     override func viewDidLayoutSubviews() {

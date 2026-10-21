@@ -12,6 +12,10 @@ import UIKit
 import AVFoundation
 import AVKit
 
+extension Notification.Name {
+    static let contentPlaybackStarted = Notification.Name("contentPlaybackStarted")
+}
+
 // MARK: - PlayerViewController
 
 final class PlayerViewController: UIViewController {
@@ -42,8 +46,17 @@ final class PlayerViewController: UIViewController {
     private var controlsTimer: Timer?
     /// True when user explicitly tapped pause — suppresses auto-loop on completion
     private var userPaused = false
+    /// True while slider is being dragged — suppresses spurious pause/resume events from seek
+    private var isScrubbing = false
 
     private var playerMuteButton: UIButton!
+
+    /// Fires if playback hasn't started within the timeout window — triggers fallback.
+    private var playbackTimeoutTimer: Timer?
+    private var isUsingFallback = false
+    private var hasPostedPlaybackStart = false
+
+    private static let fallbackVideoURL = "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8"
 
     // MARK: - Lifecycle
 
@@ -64,13 +77,6 @@ final class PlayerViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         playerLayer.frame = playerContainerView.bounds
-        if playerMuteButton != nil {
-            playerMuteButton.frame = CGRect(
-                x: 16,
-                y: progressSlider.frame.minY - 40,
-                width: 28, height: 28
-            )
-        }
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask { .all }
@@ -78,7 +84,9 @@ final class PlayerViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        player.pause()
+        playbackTimeoutTimer?.invalidate()
+        playbackTimeoutTimer = nil
+        player?.pause()
         eventHandler.detach()
         removePeriodicTimeObserver()
     }
@@ -87,6 +95,7 @@ final class PlayerViewController: UIViewController {
 
     private func setupAppearance() {
         view.backgroundColor = .black
+        playerContainerView.backgroundColor = .black
         titleLabel.text = viewModel.content.title
         titleLabel.textColor = .white
         titleLabel.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
@@ -105,8 +114,10 @@ final class PlayerViewController: UIViewController {
         try? AVAudioSession.sharedInstance().setActive(true)
 
         player = AVPlayer(url: url)
+        player.currentItem?.preferredForwardBufferDuration = 5
         playerLayer = AVPlayerLayer(player: player)
-        playerLayer.videoGravity = .resizeAspectFill
+        playerLayer.videoGravity = .resizeAspect
+        playerLayer.masksToBounds = true
         playerContainerView.layer.addSublayer(playerLayer)
 
         eventHandler.delegate = self
@@ -165,9 +176,15 @@ final class PlayerViewController: UIViewController {
         playerMuteButton.layer.cornerRadius = 14
         playerMuteButton.layer.masksToBounds = true
         playerMuteButton.addTarget(self, action: #selector(playerMuteTapped), for: .touchUpInside)
-        // Position above slider on the left — frame set in viewDidLayoutSubviews
-        playerMuteButton.frame = CGRect(x: 16, y: progressSlider.frame.minY - 40, width: 28, height: 28)
+        playerMuteButton.translatesAutoresizingMaskIntoConstraints = false
         controlsView.addSubview(playerMuteButton)
+
+        NSLayoutConstraint.activate([
+            playerMuteButton.leadingAnchor.constraint(equalTo: controlsView.leadingAnchor, constant: 12),
+            playerMuteButton.bottomAnchor.constraint(equalTo: progressSlider.topAnchor, constant: -8),
+            playerMuteButton.widthAnchor.constraint(equalToConstant: 28),
+            playerMuteButton.heightAnchor.constraint(equalToConstant: 28)
+        ])
     }
 
     // MARK: - ViewModel Binding
@@ -181,6 +198,40 @@ final class PlayerViewController: UIViewController {
     private func startPlayback() {
         loadingIndicator.startAnimating()
         player.play()
+        schedulePlaybackTimeout()
+    }
+
+    private func schedulePlaybackTimeout() {
+        playbackTimeoutTimer?.invalidate()
+        playbackTimeoutTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { [weak self] _ in
+            self?.handlePlaybackTimeout()
+        }
+    }
+
+    private func handlePlaybackTimeout() {
+        guard !isUsingFallback else { return }
+        isUsingFallback = true
+        switchToFallbackPlayer()
+    }
+
+    private func switchToFallbackPlayer() {
+        guard let url = URL(string: PlayerViewController.fallbackVideoURL) else { return }
+
+        removePeriodicTimeObserver()
+        eventHandler.detach()
+        player?.pause()
+
+        player = AVPlayer(url: url)
+        player.currentItem?.preferredForwardBufferDuration = 5
+        playerLayer.player = player
+
+        eventHandler.delegate = self
+        eventHandler.attach(to: player)
+        addPeriodicTimeObserver()
+
+        loadingIndicator.startAnimating()
+        player.play()
+        schedulePlaybackTimeout()
     }
 
     // MARK: - Periodic Time Observer
@@ -197,7 +248,7 @@ final class PlayerViewController: UIViewController {
 
     private func removePeriodicTimeObserver() {
         if let token = periodicTimeObserver {
-            player.removeTimeObserver(token)
+            player?.removeTimeObserver(token)
             periodicTimeObserver = nil
         }
     }
@@ -283,6 +334,7 @@ final class PlayerViewController: UIViewController {
     @objc private func sliderTouchDown() {
         // Pause auto-hide while scrubbing
         controlsTimer?.invalidate()
+        isScrubbing = true
         player.pause()
     }
 
@@ -298,6 +350,7 @@ final class PlayerViewController: UIViewController {
         let seekTime = CMTime(seconds: targetTime, preferredTimescale: 600)
 
         player.seek(to: seekTime, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] _ in
+            self?.isScrubbing = false
             self?.player.play()
             self?.eventHandler.didSeek(to: targetTime)
             self?.startControlsTimer()
@@ -310,16 +363,39 @@ final class PlayerViewController: UIViewController {
 extension PlayerViewController: PlayerEventHandlerDelegate {
 
     func playerEventHandler(_ handler: PlayerEventHandler, didReceive event: PlayerEvent) {
+        // Suppress pause/resume KVO noise generated by the seek scrubber drag.
+        if isScrubbing {
+            if case .playbackPaused = event { return }
+            if case .playbackStarted = event { return }
+        }
         // Dispatch all events to ViewModel — VC does not handle events directly.
         Task { @MainActor in
             self.viewModel.handle(event: event)
 
-            // Handle loading indicator visibility
+            // Handle loading indicator visibility + cancel timeout on successful start
             switch event {
             case .bufferingStarted:
                 self.loadingIndicator.startAnimating()
             case .bufferingEnded, .playbackStarted:
                 self.loadingIndicator.stopAnimating()
+                self.playbackTimeoutTimer?.invalidate()
+                self.playbackTimeoutTimer = nil
+                if case .playbackStarted = event, !self.isUsingFallback, !self.hasPostedPlaybackStart {
+                    self.hasPostedPlaybackStart = true
+                    let content = self.viewModel.content
+                    LastPlayedContentStore.save(content)
+                    NotificationCenter.default.post(
+                        name: .contentPlaybackStarted,
+                        object: nil,
+                        userInfo: ["content": content]
+                    )
+                }
+            case .playbackError:
+                if !self.isUsingFallback {
+                    self.playbackTimeoutTimer?.invalidate()
+                    self.isUsingFallback = true
+                    self.switchToFallbackPlayer()
+                }
             default:
                 break
             }
