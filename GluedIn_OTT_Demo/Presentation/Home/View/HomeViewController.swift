@@ -135,7 +135,7 @@ final class HomeViewController: UIViewController {
     private var heroBannerNeedsReload = false
 
     private func reloadHeroBannerIfNeeded() {
-        guard heroBannerNeedsReload, !viewModel.rails.isEmpty else { return }
+        guard heroBannerNeedsReload, let vm = viewModel, !vm.rails.isEmpty else { return }
         heroBannerNeedsReload = false
         tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
     }
